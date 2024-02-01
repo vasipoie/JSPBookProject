@@ -79,7 +79,7 @@
 							
 							<p id="success"></p>
 							
-							<input type="submit" id="sendBtn" value="전송" />
+							<input type="button" id="sendBtn" value="전송" onclick="Check()"/>
 						</form>
                     </div>
                 </div>
@@ -91,27 +91,26 @@
 	<%@ include file="/pageModule/footerPart.jsp" %>
 </body>
 <script type="text/javascript">
-var sendBtn = $("#sendBtn");
-sendBtn.on("click", function() {
+function Check(){
 	//숫자만 입력하되, 7-12자리까지만 입력 받을 수 있게 설정해주세요.
 	var regOne = /^[0-9]{7,12}$/;
 	
 	//시작은 영소문자 abc고 영소대문자 8-12자리까지만 입력 받을 수 있게 설정해주세요.
-	var regTwo = /^[a-c][a-zA-Z]{7,11}$/;
+	var regTwo = /^(abc)[a-zA-Z]{5,9}$/;
 	
 	//아이디는 영소문자로 시작하고 영소문자,숫자  8~16자로 설정해주세요.
 	var regId = /^[a-z][a-z0-9]{7,15}$/;
 	
 	//비밀번호는 영대문자로 시작하고 영문 대 소문자, 숫자, 특수문자  8~16자로 설정해주세요.
-	var regPw = /^[A-Z][A-Za-z0-9]{7,15}$/;
+	var regPw = /^[A-Z][^가-힣]{7,15}$/;
 	
 	//이름은 한글 2-5글자로 설정해주세요.
-	var regName = /^[가-힣]{2,5}*$/;
+	var regName = /^[가-힣]{2,5}$/;
 	
 // 	핸드폰 번호의 첫번째 자리는 011,016,017,019,070,010 으로 시작하고 <br/>
 // 	두번째 자리는 숫자 3자리 또는 숫자 4자리로 시작하고<br/>
 // 	세번째 자리는 숫자 4자리로 설정해주세요.
-	var regPhone = /^[가-힣]{2,5}*$/;
+	var regPhone = /^(010|011|016|017|019|070)-\d{3,4}-\d{4}$/;
 	
 	var form = document.frm;
 	var quest1 = form.quest1.value;
@@ -146,7 +145,14 @@ sendBtn.on("click", function() {
 		return false;
 	}
 	
-});
+	if(!regPhone.test(mem_phone)){
+		alert("첫번째 자리는 011,016,017,019,070,010 으로 시작하고 / 두번째 자리는 3,4자리 / 세번째 자리는 4자리만 입력해주세요");
+		return false;
+	}
+	
+	form.submit();
+	
+}
 
 </script>
 
